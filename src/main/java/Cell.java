@@ -37,37 +37,42 @@ public class Cell {
     static void nextGeneration(int grid[][], int M, int N){
         int[][] future = new int[M][N];
 
-        //Loop through every Cell
-        for (int m = 1; m < N - 1; m++){
-            //Finding numbers of neighbours alive
-            int aliveNeighbours = 0;
-            for (int i = -1; i <= 1; i++) {
-                for (int j = -1; j <= 1; j++) {
-                    aliveNeighbours += grid[1 + i][m + j];
+        // Loop through every cell
+        for (int l = 1; l < M - 1; l++)
+        {
+            for (int m = 1; m < N - 1; m++)
+            {
+                // finding no Of Neighbours that are alive
+                int aliveNeighbours = 0;
+                for (int i = -1; i <= 1; i++)
+                    for (int j = -1; j <= 1; j++)
+                        aliveNeighbours += grid[l + i][m + j];
 
-                    //Cells need to be subtracted from their neighbours after they were counted
-                    aliveNeighbours -= grid[1][m];
+                // The cell needs to be subtracted from
+                // its neighbours as it was counted before
+                aliveNeighbours -= grid[l][m];
 
-                    //Implement rules of the game
+                // Implementing the Rules of Life
 
-                    //Cell is lonely and dies
-                    if ((grid[1][m] == 1) && (aliveNeighbours < 2))
-                        future[1][m] = 0;
+                // Cell is lonely and dies
+                if ((grid[l][m] == 1) && (aliveNeighbours < 2))
+                    future[l][m] = 0;
 
-                        //Cell dies cos of over population
-                    else if ((grid[1][m] == 1) && (aliveNeighbours > 3))
-                        future[1][m] = 0;
+                    // Cell dies due to over population
+                else if ((grid[l][m] == 1) && (aliveNeighbours > 3))
+                    future[l][m] = 0;
 
-                        //Cell is revived
-                    else if ((grid[1][m] == 0) && (aliveNeighbours == 3))
-                        future[1][m] = 1;
+                    // A new cell is born
+                else if ((grid[l][m] == 0) && (aliveNeighbours == 3))
+                    future[l][m] = 1;
 
-                        //Remains the same
-                    else
-                        future[1][m] = grid[1][m];
-                }
+                    // Remains the same
+                else
+                    future[l][m] = grid[l][m];
             }
-            System.out.println("Next generation");
+        }
+
+        System.out.println("Next generation");
             for (int i = 0; i < M; i++){
                 for (int j = 0; j < N; j++) {
                     if (future[i][j] == 0)
@@ -78,7 +83,6 @@ public class Cell {
                 System.out.println();
             }
         }
-    }
 
     private CellState state;
 
